@@ -66,7 +66,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // User Signup
-app.post("/api/signup", async (req, res) => {
+app.post("/signup", async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
@@ -92,7 +92,7 @@ app.post("/api/signup", async (req, res) => {
 });
 
 // User Login
-app.post("/api/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -137,7 +137,7 @@ const checkAdmin = (req, res, next) => {
 };
 
 // Get User Details
-app.get("/api/user", authenticateToken, async (req, res) => {
+app.get("/user", authenticateToken, async (req, res) => {
   try {
     const email = req.user.email;
     const user = await User.findOne({ email });
@@ -151,13 +151,13 @@ app.get("/api/user", authenticateToken, async (req, res) => {
 });
 
 // API to get videos in order
-app.get("/api/videos", async (req, res) => {
+app.get("/videos", async (req, res) => {
   const videos = await Video.find().sort({ order: 1 });
   res.json(videos);
 });
 
 // API to get user progress
-app.get("/api/progress", authenticateToken, async (req, res) => {
+app.get("/progress", authenticateToken, async (req, res) => {
   const userId = req.user._id;
   try {
     const user = await User.findById(userId).populate("progress.videoId");
@@ -172,7 +172,7 @@ app.get("/api/progress", authenticateToken, async (req, res) => {
 });
 
 // API to update user progress
-app.post("/api/progress", authenticateToken, async (req, res) => {
+app.post("/progress", authenticateToken, async (req, res) => {
   const { userId, videoId, progress, lastWatched, current } = req.body;
 
   try {
@@ -210,7 +210,7 @@ app.post("/api/progress", authenticateToken, async (req, res) => {
 
 
 // Add a new video with file upload
-app.post("/api/videos/upload", upload.single("videoFile"), async (req, res) => {
+app.post("/videos/upload", upload.single("videoFile"), async (req, res) => {
   const { title, order, description } = req.body;
   const videoFile = req.file;
   try {
