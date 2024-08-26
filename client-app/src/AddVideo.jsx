@@ -7,6 +7,7 @@ const VideoUpload = ({ token,handleLogout }) => {
   const [title, setTitle] = useState('');
   const [order, setOrder] = useState('');
   const [description, setDescription] = useState('');
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleFileChange = (e) => setVideoFile(e.target.files[0]);
   const handleTitleChange = (e) => setTitle(e.target.value);
@@ -23,7 +24,7 @@ const VideoUpload = ({ token,handleLogout }) => {
     formData.append('description', description);
 
     try {
-      await axios.post('http://localhost:5000/api/videos/upload', formData, {
+      await axios.post(`${apiUrl}/videos`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,

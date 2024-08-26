@@ -18,20 +18,21 @@ const App = () => {
   const [videos, setVideos] = useState([]);
   const [progress, setProgress] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (token) {
       const fetchUserData = async () => {
         try {
-          const userRes = await axios.get("http://localhost:5000/api/user", {
+          const userRes = await axios.get(`${apiUrl}/user/profile`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(userRes.data);
 
-          const videoRes = await axios.get("http://localhost:5000/api/videos");
+          const videoRes = await axios.get(`${apiUrl}/videos`);
           setVideos(videoRes.data);
 
-          const progressRes = await axios.get("http://localhost:5000/api/progress", {
+          const progressRes = await axios.get(`${apiUrl}/user/progress`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 

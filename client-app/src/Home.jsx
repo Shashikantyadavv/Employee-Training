@@ -10,6 +10,7 @@ const Home = ({ progress, token, user, setProgress, handleLogout }) => {
   const [loading, setLoading] = useState(true);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false); 
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const calculateOverallProgress = () => {
     const totalProgress = Object.values(progress).reduce(
@@ -22,7 +23,7 @@ const Home = ({ progress, token, user, setProgress, handleLogout }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const videoRes = await axios.get("http://localhost:5000/api/videos");
+        const videoRes = await axios.get(`${apiUrl}/videos`);
         const videosData = videoRes.data;
         setVideos(videosData);
 

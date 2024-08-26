@@ -8,11 +8,12 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user'); 
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/signup', { username, email, password, role });
+      await axios.post(`${apiUrl}/auth/signup`, { username, email, password, role });
       navigate('/login');
     } catch (error) {
       console.log('Error:', error.response.data.error);

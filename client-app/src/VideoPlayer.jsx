@@ -9,6 +9,7 @@ const VideoPlayer = ({ token, user, progress, setProgress, video }) => {
   const [duration, setDuration] = useState(0); 
   const id = video._id;
   const allProgress = progress;
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (videoRef.current && allProgress[id]?.lastWatched) {
@@ -33,7 +34,7 @@ const VideoPlayer = ({ token, user, progress, setProgress, video }) => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/progress",
+        `${apiUrl}/user/progress`,
         {
           userId: user._id,
           videoId: id,
@@ -53,7 +54,7 @@ const VideoPlayer = ({ token, user, progress, setProgress, video }) => {
   const handleEnded = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/progress",
+        `${apiUrl}/user/progress`,
         {
           userId: user._id,
           videoId: id,
